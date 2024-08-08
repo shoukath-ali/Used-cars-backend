@@ -38,11 +38,18 @@ def query_db1(query, args=(), one=False):
 def query_db1(query):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute(query, args)
+    cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()  
     conn.close()   
     return result
+
+#get vehicles data
+@app.route('/vdata', methods=['GET'])
+def vdata():
+    d = query_db('SELECT * FROM Vehicles')
+    return jsonify(d)
+
 
 # Login API
 @app.route('/login', methods=['POST'])
